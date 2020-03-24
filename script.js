@@ -15,16 +15,16 @@ let game = {
     score: 0,
     win: 0,
     lost: 0,
-    draw: function(text) {
+    draw: function (text) {
         ctx.font = "20px Retro";
         ctx.fillStyle = '#FFF'
-        ctx.fillText(text, 10,20);
+        ctx.fillText(text, 10, 20);
         ctx.stroke()
     }
 }
 
 window.addEventListener('keypress', (e) => {
-    if(!(game.win || game.lost))
+    if (!(game.win || game.lost))
         paddle.update(e.key)
     else if (e.key == 'r')
         location.reload()
@@ -131,8 +131,8 @@ let ball = {
             else if (this.coordinates.y >= paddle.coordinates.y && this.coordinates.y <= paddle.coordinates.y + paddle.body.height) axis = 0
 
             if (axis == 0) this.speed.x *= -1
-            else           this.speed.y *= -1
-            
+            else this.speed.y *= -1
+
             audio_hit.play()
         }
 
@@ -149,7 +149,7 @@ let ball = {
                 else if (this.coordinates.y >= bri.coordinates.y && this.coordinates.y <= bri.coordinates.y + bri.body.height) axis = 0
 
                 if (axis == 0) this.speed.x *= -1
-                else           this.speed.y *= -1
+                else this.speed.y *= -1
 
                 game.score++
                 audio_hit.play()
@@ -174,8 +174,8 @@ let paddle = {
         ctx.beginPath()
         ctx.fillStyle = '#C0C0C0'
         ctx.lineWidth = 3.5
-        ctx.arc(this.coordinates.x, this.coordinates.y + this.body.height/2, this.body.height/2, 0*Math.PI, 2*Math.PI)
-        ctx.arc(this.coordinates.x + this.body.width, this.coordinates.y + this.body.height/2, this.body.height/2, 0*Math.PI, 2*Math.PI)
+        ctx.arc(this.coordinates.x, this.coordinates.y + this.body.height / 2, this.body.height / 2, 0 * Math.PI, 2 * Math.PI)
+        ctx.arc(this.coordinates.x + this.body.width, this.coordinates.y + this.body.height / 2, this.body.height / 2, 0 * Math.PI, 2 * Math.PI)
         ctx.strokeStyle = '#C0C0C0'
         ctx.stroke()
 
@@ -206,13 +206,11 @@ let bricks = {
     },
     reset: function () {
         this.brick = []
-        for(let i = 40; i < cvs.width - 50; i += 45){
-            for(let j = 50; j <= cvs.height - 350; j += 15){
+        for (let i = 40; i < cvs.width - 50; i += 45)
+            for (let j = 50; j <= cvs.height - 350; j += 15)
                 this.brick.push(new brick(
-                    {x: i, y: j}, '#FFFFFF'
+                    { x: i, y: j }, '#FFFFFF'
                 ))
-            }
-        }
     }
 }
 
@@ -222,15 +220,15 @@ function draw() {
     ball.draw();
     paddle.draw();
 
-    if (!(game.win || game.lost)){
+    if (!(game.win || game.lost)) {
         game.draw("Score : " + game.score);
         requestAnimationFrame(draw)
     }
-    else if(game.win){
+    else if (game.win) {
         audio_won.play()
         game.draw("You Won!")
     }
-    else if(game.lost){
+    else if (game.lost) {
         audio_lost.play()
         game.draw("You Lost! Score : " + game.score)
     }
