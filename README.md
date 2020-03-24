@@ -1,1 +1,1 @@
-# Arkanoid-BrickBreaker-JS
+# Brick Breaker Game in JS
