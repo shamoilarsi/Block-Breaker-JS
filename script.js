@@ -25,8 +25,8 @@ let game = {
 
 window.addEventListener('keypress', (e) => {
     if (!(game.win || game.lost))
-        paddle.update(e.key)
-    else if (e.key == 'r')
+        paddle.update(e.key.toLowerCase())
+    else if (e.key.toLowerCase() == 'r')
         location.reload()
 })
 
@@ -126,6 +126,13 @@ let ball = {
             y: constrain(this.coordinates.y, paddle.coordinates.y, paddle.coordinates.y + paddle.body.height)
         }
 
+        /*
+        ctx.beginPath()
+        ctx.moveTo(this.coordinates.x, this.coordinates.y);
+        ctx.lineTo(pointsOnPaddle.x, pointsOnPaddle.y);
+        ctx.stroke()
+        */
+
         if (distanceBetweenPoints(this.coordinates, pointsOnPaddle) <= this.radius) {
             if (this.coordinates.x >= paddle.coordinates.x && this.coordinates.x <= paddle.coordinates.x + paddle.body.width) axis = 1
             else if (this.coordinates.y >= paddle.coordinates.y && this.coordinates.y <= paddle.coordinates.y + paddle.body.height) axis = 0
@@ -136,10 +143,13 @@ let ball = {
             audio_hit.play()
         }
 
+        // console.log(bricks.brick)
+
         //CHECK BRICK COLLISION
         bricks.brick.forEach((bri, index, obj) => {
             let axis = 0
-            pointOnRect = {
+
+            let pointOnRect = {
                 x: constrain(this.coordinates.x, bri.coordinates.x, bri.coordinates.x + bri.body.width),
                 y: constrain(this.coordinates.y, bri.coordinates.y, bri.coordinates.y + bri.body.height)
             }
